@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<game_state>
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<map />
+	<scene />
+	<player>
+		<player x="512" y="215" />
+	</player>
+	<renderer>
+		<camera x="0" y="0" />
+	</renderer>
+</game_state>
