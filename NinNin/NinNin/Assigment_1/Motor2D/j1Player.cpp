@@ -37,7 +37,7 @@ j1Player::j1Player():j1Module()
 		idle_right.PushBack({ 2559,111,176,331 });
 
 		idle_right.loop = true;
-		idle_right.speed = 0.9f;
+		idle_right.speed = 0.5f;
 	}
 
 	//idle animation Left
@@ -55,7 +55,7 @@ j1Player::j1Player():j1Module()
 
 		idle_left.loop = true;
 		//idle_left.speed = 0.001f;
-		idle_left.speed = 0.9f;
+		idle_left.speed = 0.5f;
 	}
 
 	
@@ -73,14 +73,14 @@ j1Player::j1Player():j1Module()
 		right.PushBack({ 2560,472,263,332 });
 
 		right.loop = true;
-		right.speed = 0.9f;
+		right.speed = 0.5f;
 	}
 
 	//Move Right back
 	right_back.PushBack({ 0,0,50,50 });
 
 	right_back.loop = true;
-	right_back.speed = 0.09f;
+	right_back.speed = 0.5f;
 
 	// Move Left
 	{
@@ -96,23 +96,23 @@ j1Player::j1Player():j1Module()
 		left.PushBack({ 2560,823,263,332 });
 
 		left.loop = true;
-		left.speed = 0.9f;
+		left.speed = 0.5;
 	}
 
 	//Move Left Back
 	left_back.PushBack({ 0,0,50,50 });
 
 	left_back.loop = true;
-	left_back.speed = 0.09f;
+	left_back.speed = 0.5f;
 
 	//DIE
 	die.PushBack({ 331,190,29,26 });
 	die.PushBack({ 361,190,29,26 });
 	die.PushBack({ 391,190,29,26 });
 	die.loop =true;
-	die.speed = 0.05f;
+	die.speed = 0.5f;
 
-	//JUMP
+	//JUMP_RIGHT
 	{
 		jump.PushBack({ 64,2103,263,332 });
 		jump.PushBack({ 327,2103,263,332 });
@@ -125,8 +125,8 @@ j1Player::j1Player():j1Module()
 		jump.PushBack({ 2286,2103,263,332 });
 		jump.PushBack({ 2560,2103,263,332 });
 
-		jump.loop = true;
-		jump.speed = 0.9f;
+		jump.loop = false;
+		jump.speed = 0.5f;
 	}
 
 
@@ -150,7 +150,7 @@ bool j1Player::Start()
 	graphics = App->tex->Load("assets/character/character.png");
 
 	LOG("Loading Player Collider");
-	Player_Collider = App->colliders->AddCollider({ position.x, position.y, 46, 70 }, COLLIDER_PLAYER, this);
+	Player_Collider = App->colliders->AddCollider({ position.x, position.y, 46, 250 }, COLLIDER_PLAYER, this);
 	//font_score = App->fonts->Load("fonts/Lletres_1.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZ./\ ", 2);
 
 	//Init Screen vars
@@ -159,7 +159,7 @@ bool j1Player::Start()
 	win_scale = App->win->GetScale();
 
 	//Init position vars
-	position.x = win_width/2;
+	position.x = 30;//win_width/12;
 	position.y = 215;
 
 	//Init Jump vars
@@ -192,7 +192,7 @@ bool j1Player::CleanUp()
 bool j1Player::Update(float dt)
 {
 	SDL_Event e;
-	speed = 4;
+	speed = 8;
 	SDL_Rect Potato = { 128,717,49,56 };
 	SDL_Rect Potato_2 = { ((win_width*win_scale) / 2) - (23 * win_scale),position.y*win_scale - 35 * win_scale,100,100 };
 
@@ -241,6 +241,7 @@ bool j1Player::Update(float dt)
 			current_animation = &jump;
 			player_last_direction = RIGHT;
 		}
+		
 	}
 	
 	//Function that makes the Jump
