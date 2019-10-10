@@ -4,72 +4,74 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "p2List.h"
 #include "p2Point.h"
-#include "p2DynArray.h"
 #include "j1Module.h"
-#include "SDL/include/SDL.h"
 
-// TODO 2: Create a struct to hold information for a TileSet
-// Ignore Terrain Types and Tile Types for now, but we want the image!
-// ----------------------------------------------------
+// TODO 1: Create a struct for the map layer
 
-struct Tileset {
+struct MapLayer {
+	// ----------------------------------------------------
 
-	p2SString	name;
-	p2SString	img_source;
+	// TODO 6: Short function to get the value of x,y
 
-	uint		tileWidth;
-	uint		tileHeight;
-	uint		spacing;
-	uint		margin;
+	inline uint Get(int x, int y) const;
 
-};
-struct Layer {
+	// ----------------------------------------------------
+
 
 	p2SString		name;
 
 	uint			width;
 	uint			height;
 
-	p2List<uint>	data;
+	//p2List<uint>	data; slow way
+	uint*			data = nullptr;
+	uint			size = 0;
+
+	~MapLayer();
 
 };
 
 
-// TODO 1: Create a struct needed to hold the information to Map node
-enum Map_Orientation
+struct TileSet
 {
-	orthogonal,
-	isometric,
-	staggered,
-	hexagonal
+	// TODO 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
+	SDL_Rect GetTileRect(int id) const;
+
+	p2SString			name;
+	int					firstgid;
+	int					margin;
+	int					spacing;
+	int					tile_width;
+	int					tile_height;
+	SDL_Texture*		texture;
+	int					tex_width;
+	int					tex_height;
+	int					num_tiles_width;
+	int					num_tiles_height;
+	int					offset_x;
+	int					offset_y;
 };
 
-enum Map_renderorder 
+enum MapTypes
 {
-	right_down=0,
-	right_up,
-	left_down,
-	left_up
+	MAPTYPE_UNKNOWN = 0,
+	MAPTYPE_ORTHOGONAL,
+	MAPTYPE_ISOMETRIC,
+	MAPTYPE_STAGGERED
 };
-
-struct Map{
-
-	float				version;
-
-	Map_Orientation		orientation;
-	Map_renderorder		renderorder;
-
-	uint				width;
-	uint				height;
-	uint				tilewidth;
-	uint				tileheight;
-	uint				nextobject;
-
-	p2List<Tileset>		map_tileset;
-	p2List<Layer>		map_layers;
-
+// ----------------------------------------------------
+struct MapData
+{
+	int					width;
+	int					height;
+	int					tile_width;
+	int					tile_height;
+	SDL_Color			background_color;
+	MapTypes			type;
+	p2List<TileSet*>	tilesets;
+	// TODO 2: Add a list/array of layers to the map!
+	p2List<MapLayer*>	layers;
 };
-
 
 // ----------------------------------------------------
 class j1Map : public j1Module
@@ -93,37 +95,25 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
+	iPoint MapToWorld(int x, int y) const;
+
 private:
 
-	//Load and fill map data
-	void FillMap(const pugi::xml_document& document);
-
-	//Load and fill tilset
-	void FillTilset(const pugi::xml_document& document, p2List<Tileset>& tileset_map);
-
-	//Load and fill layers
-	void FillLayer(const pugi::xml_document& document, p2List<Layer>& layer_map);
-
-	//Log all
-	void LogAll();
-
-	//Transform from string to Map_renderorder enum
-	Map_renderorder String_to_Enum_1(p2SString str);
-
-	//Transform from string to Map_orientation enum
-	Map_Orientation String_to_Enum_2(p2SString str);
+	bool LoadMap();
+	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
+	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
+	// TODO 3: Create a method that loads a single laye
+	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 
 public:
 
-	// TODO 1: Add your struct for map info as public for now
-	Map first_map;
+	MapData data;
 
 private:
 
-	pugi::xml_document		map_file;
-	p2SString				folder;
-	bool					map_loaded;
-	p2List<SDL_Texture*>	Map_texture;
+	pugi::xml_document	map_file;
+	p2SString			folder;
+	bool				map_loaded;
 };
-
 #endif // __j1MAP_H__
