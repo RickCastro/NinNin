@@ -40,7 +40,7 @@ void j1Map::Draw()
 
 		aux_texture = App->tex->Load(first_map.map_tileset[i].img_source.GetString());
 		Map_texture.add(aux_texture);
-		App->render->Blit(Map_texture[i], 0, 0);
+		App->render->Blit(1.0f,Map_texture[i], 0, 0);
 	}
 
 }

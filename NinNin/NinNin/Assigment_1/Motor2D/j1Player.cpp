@@ -132,7 +132,7 @@ bool j1Player::CleanUp()
 bool j1Player::Update(float dt)
 {
 	SDL_Event e;
-	speed = 2;
+	speed = 1;
 	SDL_Rect Potato = { 128,717,49,56 };
 	SDL_Rect Potato_2 = { ((win_width*win_scale) / 2) - (23 * win_scale),position.y*win_scale - 35 * win_scale,100,100 };
 
@@ -140,14 +140,10 @@ bool j1Player::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= speed;
+
 		//The direccion changes with the position of the mouse
-		if (current_animation != &left && angle() >= 90 && angle()<270)
-		{
-			left.Reset();
-			current_animation = &left;
-			player_last_direction = LEFT;
-		}
-		if (current_animation != &right_back && (angle() >= 270 || angle()<90))
+		
+		if (current_animation != &right_back)
 		{
 			right_back.Reset();
 			current_animation = &right_back;
@@ -161,13 +157,7 @@ bool j1Player::Update(float dt)
 
 		position.x += speed;
 
-		if (current_animation != &left_back && angle() >= 90 && angle()<270)
-		{
-			left_back.Reset();
-			current_animation = &left_back;
-			player_last_direction = LEFT;
-		}
-		if (current_animation != &right && (angle() >= 270 || angle()<90))
+		if (current_animation != &right)
 		{
 			right.Reset();
 			current_animation = &right;
@@ -317,7 +307,7 @@ bool j1Player::Update(float dt)
 	//Rotate texture
 	//SDL_RenderCopyEx(App->render->renderer, graphics, &Potato, &Potato_2, angle(), NULL, SDL_FLIP_NONE);
 	// Draw everything --------------------------------------
-	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+	App->render->Blit(0.5f,graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
 	return true;
 }
