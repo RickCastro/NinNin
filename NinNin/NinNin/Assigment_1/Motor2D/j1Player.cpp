@@ -60,7 +60,16 @@ j1Player::j1Player():j1Module()
 	right_back.speed = 0.09f;
 
 	// Move Left
-	left.PushBack({ 0,0,50,50 });
+	left.PushBack({ 64,823,263,332 });
+	left.PushBack({ 327,823,263,332 });
+	left.PushBack({ 590,823,263,332 });
+	left.PushBack({ 853,823,263,332 });
+	left.PushBack({ 1137,823,263,332 });
+	left.PushBack({ 1449,823,263,332 });
+	left.PushBack({ 1734,823,263,332 });
+	left.PushBack({ 2019,823,263,332 });
+	left.PushBack({ 2286,823,263,332 });
+	left.PushBack({ 2560,823,263,332 });
 
 	left.loop = true;
 	left.speed = 0.1f;
@@ -143,10 +152,10 @@ bool j1Player::Update(float dt)
 
 		//The direccion changes with the position of the mouse
 		
-		if (current_animation != &right_back)
+		if (current_animation != &left)
 		{
-			right_back.Reset();
-			current_animation = &right_back;
+			left.Reset();
+			current_animation = &left;
 			player_last_direction = RIGHT;
 		}
 
@@ -307,7 +316,7 @@ bool j1Player::Update(float dt)
 	//Rotate texture
 	//SDL_RenderCopyEx(App->render->renderer, graphics, &Potato, &Potato_2, angle(), NULL, SDL_FLIP_NONE);
 	// Draw everything --------------------------------------
-	App->render->Blit(0.5f,graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),1.0f);
 
 	return true;
 }
