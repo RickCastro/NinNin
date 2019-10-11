@@ -35,12 +35,20 @@ j1Player::j1Player():j1Module()
 	idle_Stop.PushBack({ 2284,111,176,331 });
 	idle_Stop.PushBack({ 2559,111,176,331 });
 
-
 	idle_Stop.loop = true;
 	idle_Stop.speed = 0.05f;
 	
 	// Move Right
-	right.PushBack({ 0,0,50,50 });
+	right.PushBack({ 64,472,263,332 });
+	right.PushBack({ 327,472,263,332 });
+	right.PushBack({ 590,472,263,332 });
+	right.PushBack({ 853,472,263,332 });
+	right.PushBack({ 1137,472,263,332 });
+	right.PushBack({ 1449,472,263,332 });
+	right.PushBack({ 1734,472,263,332 });
+	right.PushBack({ 2019,472,263,332 });
+	right.PushBack({ 2286,472,263,332 });
+	right.PushBack({ 2560,472,263,332 });
 
 	right.loop = true;
 	right.speed = 0.1f;
@@ -307,7 +315,7 @@ bool j1Player::Update(float dt)
 	//Player_Coll->SetPos(position.x, position.y);
 
 	//Rotate texture
-	SDL_RenderCopyEx(App->render->renderer, graphics, &Potato, &Potato_2, angle(), NULL, SDL_FLIP_NONE);
+	//SDL_RenderCopyEx(App->render->renderer, graphics, &Potato, &Potato_2, angle(), NULL, SDL_FLIP_NONE);
 	// Draw everything --------------------------------------
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
