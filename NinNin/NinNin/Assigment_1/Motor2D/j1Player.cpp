@@ -24,15 +24,16 @@ j1Player::j1Player():j1Module()
 	current_animation = NULL;
 
 	//idle animation Right
-	idle_Stop.PushBack({ 64,110,176,331 });
-	idle_Stop.PushBack({ 312,110,176,331 });
-	idle_Stop.PushBack({ 576,110,176,331 });
-	idle_Stop.PushBack({ 846,110,176,331 });
-	idle_Stop.PushBack({ 1140,110,176,331 });
-	idle_Stop.PushBack({ 1452,110,176,331 });
-	idle_Stop.PushBack({ 2021,110,176,331 });
-	idle_Stop.PushBack({ 2286,110,176,331 });
-	idle_Stop.PushBack({ 2560,110,176,331 });
+	idle_Stop.PushBack({ 64,111,176,331 });
+	idle_Stop.PushBack({ 310,111,176,331 });
+	idle_Stop.PushBack({ 575,111,176,331 });
+	idle_Stop.PushBack({ 845,111,176,331 });
+	idle_Stop.PushBack({ 1138,111,176,331 });
+	idle_Stop.PushBack({ 1450,111,176,331 });
+	idle_Stop.PushBack({ 1735,111,176,331 });
+	idle_Stop.PushBack({ 2019,111,176,331 });
+	idle_Stop.PushBack({ 2284,111,176,331 });
+	idle_Stop.PushBack({ 2559,111,176,331 });
 
 
 	idle_Stop.loop = true;
