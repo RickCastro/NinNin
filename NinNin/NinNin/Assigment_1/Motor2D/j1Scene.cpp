@@ -7,7 +7,6 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Map.h"
-#include "j1Colliders.h"
 #include "j1Scene.h"
 #include "j1Player.h"
 
@@ -32,11 +31,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load("untitled.tmx");
-	App->audio->PlayMusic("audio/music/map1_music.ogg");
-	//Colliders
-	App->colliders->AddCollider({ 0,500,10000,1 }, COLLIDER_FLOOR);
-
+	App->map->Load("hello2.tmx");
 	return true;
 }
 
@@ -55,41 +50,27 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		App->SaveGame();
 
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		App->render->camera.y += 4;
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		App->render->camera.y -= 1;
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		App->render->camera.y -= 4;
+	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		App->render->camera.y += 1;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		if (App->render->camera.x < 0)
-		{
-			App->render->camera.x += App->player->speed;
-		}	
-	}
-		
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		if (App->player->position.x >= 400 && App->render->camera.x >= -570)
-		{
-			App->render->camera.x -= App->player->speed;
-		}
-	}
-	//Check Points
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		App->render->camera.x -= 1;
 
+	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		App->render->camera.x += 1;
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 
 	// TODO 7: Set the window title like
 	// "Map:%dx%d Tiles:%dx%d Tilesets:%d"
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Player.x=%i Player.y=%i CameraPosition.x=%i CameraPosition.y=%i",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count(), App->player->position.x, 
-					App->player->position.y, App->render->camera.x,
-					App->render->camera.y);
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+					App->map->first_map.width, App->map->first_map.height,
+					App->map->first_map.tilewidth, App->map->first_map.tileheight,
+					App->map->first_map.map_tileset.count());
 
 	App->win->SetTitle(title.GetString());
 	return true;
@@ -110,8 +91,6 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	//Reset Checkpoints
-	
 
 	return true;
 }

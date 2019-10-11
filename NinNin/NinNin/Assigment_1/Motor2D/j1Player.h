@@ -21,12 +21,10 @@ public:
 	j1Player();
 	~j1Player();
 
-	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
-	void OnCollision(Collider* c1, Collider* c2);
-	void Jump_Method();
+	//void OnCollision(Collider* c1, Collider* c2);
 	//void shot();
 	float angle();
 
@@ -44,8 +42,7 @@ public:
 	SDL_Rect bridge;
 
 	Animation* current_animation = nullptr;
-	Animation idle_right;
-	Animation idle_left;
+	Animation idle_Stop;
 	Animation left;
 	Animation right;
 	Animation left_back;
@@ -54,32 +51,37 @@ public:
 	Animation bullet_explosion;
 	Animation Scythe_Right;
 	Animation Scythe_Left;
-	Animation jump;
 
-	Collider* Player_Collider;
-	Collider* feetcoll;
+	//Collider* Player_Coll;
+	//Collider* feetcoll;
 
 	int font_score = -1;
 	int speed;
-	int Pos_jump;
 
 
 	enum LastDirection { UP, DOWN, LEFT, RIGHT, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT };
 	LastDirection player_last_direction;
 	iPoint position;
-	
+	bool stop = false;
+	bool alive = false;
+	bool anim = false;
+	bool water = false;
+	bool grenade = false;
+	bool distance = false;
 	bool Jump = false;
 	bool fall = false;
 	bool shooting = false;
-	
+	int shots_fired = 0;
+	int shot_current_delay = 0;
+	int score = 0;
+	int counter = 0;
+	bool god = false;
+	bool only = true;
 
 private:
 	uint win_width;
 	uint win_height;
 	uint win_scale;
-	uint jump_height;
-	uint jump_vel;
-	uint gravity;
 };
 
 #endif
