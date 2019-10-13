@@ -51,6 +51,7 @@ public:
 	Animation bullet_explosion;
 	Animation Scythe_Right;
 	Animation Scythe_Left;
+	Animation jump;
 
 	//Collider* Player_Coll;
 	//Collider* feetcoll;

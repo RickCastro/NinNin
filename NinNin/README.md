@@ -1,3 +1,3 @@
 # GDJM
-Game development Ricky Castro
-Nin-Nin
+Game development Ricardo Castro
+NinNin
