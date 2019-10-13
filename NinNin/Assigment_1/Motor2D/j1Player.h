@@ -24,7 +24,7 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
-	//void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* c1, Collider* c2);
 	//void shot();
 	float angle();
 
@@ -42,7 +42,8 @@ public:
 	SDL_Rect bridge;
 
 	Animation* current_animation = nullptr;
-	Animation idle_Stop;
+	Animation idle_right;
+	Animation idle_left;
 	Animation left;
 	Animation right;
 	Animation left_back;
@@ -53,11 +54,12 @@ public:
 	Animation Scythe_Left;
 	Animation jump;
 
-	//Collider* Player_Coll;
-	//Collider* feetcoll;
+	Collider* Player_Collider;
+	Collider* feetcoll;
 
 	int font_score = -1;
 	int speed;
+	int Pos_jump;
 
 
 	enum LastDirection { UP, DOWN, LEFT, RIGHT, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT };

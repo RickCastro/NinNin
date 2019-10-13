@@ -8,7 +8,7 @@
 //#include "ModuleParticles.h"
 #include "j1Render.h"
 #include "j1Window.h"
-//#include "ModuleCollision.h"
+#include "j1Colliders.h"
 //#include "ModuleFadeToBlack.h"
 #include "j1Player.h"
 #include "j1Audio.h"
@@ -24,34 +24,57 @@ j1Player::j1Player():j1Module()
 	current_animation = NULL;
 
 	//idle animation Right
-	idle_Stop.PushBack({ 64,111,176,331 });
-	idle_Stop.PushBack({ 310,111,176,331 });
-	idle_Stop.PushBack({ 575,111,176,331 });
-	idle_Stop.PushBack({ 845,111,176,331 });
-	idle_Stop.PushBack({ 1138,111,176,331 });
-	idle_Stop.PushBack({ 1450,111,176,331 });
-	idle_Stop.PushBack({ 1735,111,176,331 });
-	idle_Stop.PushBack({ 2019,111,176,331 });
-	idle_Stop.PushBack({ 2284,111,176,331 });
-	idle_Stop.PushBack({ 2559,111,176,331 });
+	{
+		idle_right.PushBack({ 64,111,176,331 });
+		idle_right.PushBack({ 310,111,176,331 });
+		idle_right.PushBack({ 575,111,176,331 });
+		idle_right.PushBack({ 845,111,176,331 });
+		idle_right.PushBack({ 1138,111,176,331 });
+		idle_right.PushBack({ 1450,111,176,331 });
+		idle_right.PushBack({ 1735,111,176,331 });
+		idle_right.PushBack({ 2019,111,176,331 });
+		idle_right.PushBack({ 2284,111,176,331 });
+		idle_right.PushBack({ 2559,111,176,331 });
 
-	idle_Stop.loop = true;
-	idle_Stop.speed = 0.05f;
+		idle_right.loop = true;
+		idle_right.speed = 0.03f;
+	}
+
+	//idle animation Left
+	{
+		idle_left.PushBack({ 64,1159,176,329 });
+		idle_left.PushBack({ 311,1159,176,329 });
+		idle_left.PushBack({ 577,1159,176,329 });
+		idle_left.PushBack({ 848,1159,176,329 });
+		idle_left.PushBack({ 1142,1159,176,329 });
+		idle_left.PushBack({ 1455,1159,176,329 });
+		idle_left.PushBack({ 1739,1159,176,329 });
+		idle_left.PushBack({ 2022,1159,176,329 });
+		idle_left.PushBack({ 2286,1159,176,329 });
+		idle_left.PushBack({ 2560,1159,176,329 });
+
+		idle_left.loop = true;
+		//idle_left.speed = 0.001f;
+		idle_left.speed = 0.03f;
+	}
+
 	
 	// Move Right
-	right.PushBack({ 64,472,263,332 });
-	right.PushBack({ 327,472,263,332 });
-	right.PushBack({ 590,472,263,332 });
-	right.PushBack({ 853,472,263,332 });
-	right.PushBack({ 1137,472,263,332 });
-	right.PushBack({ 1449,472,263,332 });
-	right.PushBack({ 1734,472,263,332 });
-	right.PushBack({ 2019,472,263,332 });
-	right.PushBack({ 2286,472,263,332 });
-	right.PushBack({ 2560,472,263,332 });
+	{
+		right.PushBack({ 64,472,263,332 });
+		right.PushBack({ 327,472,263,332 });
+		right.PushBack({ 590,472,263,332 });
+		right.PushBack({ 853,472,263,332 });
+		right.PushBack({ 1137,472,263,332 });
+		right.PushBack({ 1449,472,263,332 });
+		right.PushBack({ 1734,472,263,332 });
+		right.PushBack({ 2019,472,263,332 });
+		right.PushBack({ 2286,472,263,332 });
+		right.PushBack({ 2560,472,263,332 });
 
-	right.loop = true;
-	right.speed = 0.1f;
+		right.loop = true;
+		right.speed = 0.05f;
+	}
 
 	//Move Right back
 	right_back.PushBack({ 0,0,50,50 });
@@ -60,19 +83,21 @@ j1Player::j1Player():j1Module()
 	right_back.speed = 0.09f;
 
 	// Move Left
-	left.PushBack({ 64,823,263,332 });
-	left.PushBack({ 327,823,263,332 });
-	left.PushBack({ 590,823,263,332 });
-	left.PushBack({ 853,823,263,332 });
-	left.PushBack({ 1137,823,263,332 });
-	left.PushBack({ 1449,823,263,332 });
-	left.PushBack({ 1734,823,263,332 });
-	left.PushBack({ 2019,823,263,332 });
-	left.PushBack({ 2286,823,263,332 });
-	left.PushBack({ 2560,823,263,332 });
+	{
+		left.PushBack({ 64,823,263,332 });
+		left.PushBack({ 327,823,263,332 });
+		left.PushBack({ 590,823,263,332 });
+		left.PushBack({ 853,823,263,332 });
+		left.PushBack({ 1137,823,263,332 });
+		left.PushBack({ 1449,823,263,332 });
+		left.PushBack({ 1734,823,263,332 });
+		left.PushBack({ 2019,823,263,332 });
+		left.PushBack({ 2286,823,263,332 });
+		left.PushBack({ 2560,823,263,332 });
 
-	left.loop = true;
-	left.speed = 0.1f;
+		left.loop = true;
+		left.speed = 0.05f;
+	}
 
 	//Move Left Back
 	left_back.PushBack({ 0,0,50,50 });
@@ -88,19 +113,22 @@ j1Player::j1Player():j1Module()
 	die.speed = 0.05f;
 
 	//JUMP
-	jump.PushBack({ 64,2103,263,332 });
-	jump.PushBack({ 327,2103,263,332 });
-	jump.PushBack({ 590,2103,263,332 });
-	jump.PushBack({ 853,2103,263,332 });
-	jump.PushBack({ 1137,2103,263,332 });
-	jump.PushBack({ 1449,2103,263,332 });
-	jump.PushBack({ 1734,2103,263,332 });
-	jump.PushBack({ 2019,2103,263,332 });
-	jump.PushBack({ 2286,2103,263,332 });
-	jump.PushBack({ 2560,2103,263,332 });
+	{
+		jump.PushBack({ 64,2103,263,332 });
+		jump.PushBack({ 327,2103,263,332 });
+		jump.PushBack({ 590,2103,263,332 });
+		jump.PushBack({ 853,2103,263,332 });
+		jump.PushBack({ 1137,2103,263,332 });
+		jump.PushBack({ 1449,2103,263,332 });
+		jump.PushBack({ 1734,2103,263,332 });
+		jump.PushBack({ 2019,2103,263,332 });
+		jump.PushBack({ 2286,2103,263,332 });
+		jump.PushBack({ 2560,2103,263,332 });
 
-	jump.loop = true;
-	jump.speed = 0.05f;
+		jump.loop = true;
+		jump.speed = 0.03f;
+	}
+
 
 }
 
@@ -120,7 +148,7 @@ bool j1Player::Start()
 	graphics = App->tex->Load("assets/character/character.png");
 
 	LOG("Loading Player Collider");
-	//Player_Coll = App->collision->AddCollider({ position.x, position.y, 46, 70 }, COLLIDER_PLAYER, this);
+	Player_Collider = App->colliders->AddCollider({ position.x, position.y, 46, 70 }, COLLIDER_PLAYER, this);
 	//font_score = App->fonts->Load("fonts/Lletres_1.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZ./\ ", 2);
 
 	position.x = win_width/2;
@@ -147,7 +175,7 @@ bool j1Player::CleanUp()
 	//App->textures->Unload(textures);
 
 	LOG("Destroying Player Collider");
-	//if (Player_Coll != nullptr)
+	if (Player_Collider != nullptr)
 		//Player_Coll->to_delete = true;
 
 	return true;
@@ -171,7 +199,7 @@ bool j1Player::Update(float dt)
 		{
 			left.Reset();
 			current_animation = &left;
-			player_last_direction = RIGHT;
+			player_last_direction = LEFT;
 		}
 
 	}
@@ -191,9 +219,11 @@ bool j1Player::Update(float dt)
 	}
 
 	//JUMP
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
-		//position.y -= speed;
+
+		position.y -= speed;
+		Jump = true;
 
 		if (current_animation != &jump)
 		{
@@ -203,29 +233,14 @@ bool j1Player::Update(float dt)
 		}
 	}
 
-	//GRAVITY SIMULATOR
-	/*if (Jump == false)
-	{
-		position.y += 5;
+	if (!Jump) {
+		position.y += 2;
 	}
-
-	/*
-		//JUMP METHODE
-	if (Jump == true && fall == false)
+	else if (Jump)
 	{
-		position.y -= 10;
-		counter++;
-		if (counter == 10)
-		{
-			counter = 0;
-			fall = true;
-		}
+		Jump = false;
 	}
-	if (Jump == true && fall == true)
-	{
-		position.y += 10;
-	}*/
-
+	
 	//IDLE ANIMATIONS
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_IDLE
 		&& App->input->GetKey(SDL_SCANCODE_UP) == KEY_IDLE
@@ -236,27 +251,27 @@ bool j1Player::Update(float dt)
 		switch (player_last_direction)
 		{
 		case j1Player::UP:
-			current_animation = &idle_Stop;
+			current_animation = &idle_right;
 			break;
 		case j1Player::DOWN:
-			current_animation = &idle_Stop;
+			current_animation = &idle_right;
 			break;
 		case j1Player::LEFT:
-			current_animation = &idle_Stop;
+			current_animation = &idle_left;
 			break;
 		case j1Player::RIGHT:
-			current_animation = &idle_Stop;
+			current_animation = &idle_right;
 			break;
 		default:
 			break;
 		}
 	}
 
-	// Player Colliders Position
-	//Player_Coll->SetPos(position.x, position.y);
+	//Player Colliders Position
+	Player_Collider->SetPos(position.x, position.y);
 
 	// Draw everything --------------------------------------
-	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),1.0f);
+	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),0.5f);
 
 	return true;
 }
@@ -281,90 +296,16 @@ bool j1Player::Save(pugi::xml_node& data) const
 }
 
 
-/*void j1Player::OnCollision(Collider* c1, Collider* c2) {
-	if (c2->type == COLLIDER_WALL)
-	{
-		if (c1 == feetcoll && (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT
-			|| App->input->controll[0] == KEY_STATE::KEY_REPEAT))
-		{
-			position.y += 1;
-		}
-		if (c1 == feetcoll && (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT
-			|| App->input->controll[1] == KEY_STATE::KEY_REPEAT))
-		{
-			position.y -= 1;
-		}
-		if (c1 == feetcoll && (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT
-			|| App->input->controll[3] == KEY_STATE::KEY_REPEAT))
-		{
-			position.x += 1;
-		}
-		if (c1 == feetcoll && (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT
-			|| App->input->controll[2] == KEY_STATE::KEY_REPEAT))
-		{
-			position.x -= 1;
-		}
-	}
-
-	if (c2->type == COLLIDER_ENEMY_SHOT && god == false)
-	{
-		if (alive) {
-			alive = false;
-			App->elements1->num_lives_play_1--;
-			anim = true;
-		}
-	}
-
-	if (c2->type == COLLIDER_ENEMY && god == false)
-	{
-		if (alive) {
-			alive = false;
-			App->elements1->num_lives_play_1--;
-			anim = true;
-		}
-	}
-
+void j1Player::OnCollision(Collider* c1, Collider* c2) {
+	
 	//Jump methode
 	if (c2->type == COLLIDER_FLOOR)
 	{
-		position.y -= 5;
+		position.y -= 2;
 		Jump = false;
 		fall = false;
 	}
-}*/
-
-/*void j1Player::shot() {
-	int x, y;
-
-	// Taking the Position of the mouse
-	SDL_GetMouseState(&x, &y);
-
-	//Changing the focus of the mouse (0,0) by default
-	x = x - ((SCREEN_WIDTH*SCREEN_SIZE) / 2) - (23 * SCREEN_SIZE);
-	y = y - position.y*SCREEN_SIZE - 35 * SCREEN_SIZE;
-	LOG("La X=%d i la Y=%d", x, y);
-
-	//The direction of the bullet is the module of the new mouse position
-	App->particles->bullet.speed.y = y / sqrt(x*x + y*y) * 5;
-	App->particles->bullet.speed.x = x / sqrt(x*x + y*y) * 5;
-
-	//Creates the Particle
-	if (shots_fired < SHOTS_PER_BURST && shooting == true && App->ui->mana>0) {
-		LOG("ShOOTTOODAAA!!!!");
-		if (shot_current_delay < SHOT_DELAY)
-			shot_current_delay++;
-		else {
-			App->particles->AddParticle(App->particles->bullet, position.x + 23, position.y + 35, COLLIDER_PLAYER_SHOT);
-			shots_fired++;
-			shot_current_delay = 0;
-			App->ui->mana--;
-		}
-	}
-	else {
-		shots_fired = 0;
-		shooting = false;
-	}
-}*/
+}
 
 float j1Player::angle()
 {
