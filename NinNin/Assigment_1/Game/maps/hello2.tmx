@@ -52,6 +52,9 @@
  <tileset firstgid="49" name="Forest" tilewidth="128" tileheight="128" tilecount="100" columns="10">
   <image source="Tiles.png" width="1280" height="1280"/>
  </tileset>
+ <tileset firstgid="149" name="sfg" tilewidth="128" tileheight="128" tilecount="100" columns="10">
+  <image source="Tiles Objects.png" width="1280" height="1280"/>
+ </tileset>
  <layer name="Capa de Patrones 1" width="50" height="15">
   <data>
    <tile gid="49"/>
@@ -457,8 +460,8 @@
    <tile gid="49"/>
    <tile gid="49"/>
    <tile gid="49"/>
-   <tile gid="49"/>
-   <tile gid="59"/>
+   <tile gid="156"/>
+   <tile gid="157"/>
    <tile gid="49"/>
    <tile gid="59"/>
    <tile gid="59"/>
@@ -507,12 +510,12 @@
    <tile gid="49"/>
    <tile gid="49"/>
    <tile gid="49"/>
+   <tile gid="166"/>
+   <tile gid="167"/>
+   <tile gid="186"/>
    <tile gid="59"/>
-   <tile gid="59"/>
-   <tile gid="49"/>
-   <tile gid="59"/>
-   <tile gid="59"/>
-   <tile gid="59"/>
+   <tile gid="176"/>
+   <tile gid="176"/>
    <tile gid="59"/>
    <tile gid="59"/>
    <tile gid="59"/>

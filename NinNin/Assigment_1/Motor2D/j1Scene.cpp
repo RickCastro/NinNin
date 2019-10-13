@@ -35,7 +35,7 @@ bool j1Scene::Start()
 	App->map->Load("hello2.tmx");
 
 	//Colliders
-	App->colliders->AddCollider({ 0,285,1000,10 }, COLLIDER_FLOOR);
+	App->colliders->AddCollider({ 0,500,10000,1 }, COLLIDER_FLOOR);
 	return true;
 }
 
