@@ -84,7 +84,7 @@ j1Player::j1Player():j1Module()
 	die.PushBack({ 331,190,29,26 });
 	die.PushBack({ 361,190,29,26 });
 	die.PushBack({ 391,190,29,26 });
-	die.loop = false;
+	die.loop =true;
 	die.speed = 0.05f;
 
 	//JUMP
@@ -191,9 +191,8 @@ bool j1Player::Update(float dt)
 	}
 
 	//JUMP
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && Jump == false)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		Jump = true;
 		//position.y -= speed;
 
 		if (current_animation != &jump)
@@ -201,49 +200,6 @@ bool j1Player::Update(float dt)
 			jump.Reset();
 			current_animation = &jump;
 			player_last_direction = RIGHT;
-		}
-	}
-	//DOWN
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		/*if (position.y <SCREEN_HEIGHT - 20) {
-		position.y += speed;
-		}
-		if (current_animation != &down)
-		{
-		down.Reset();
-		current_animation = &down;
-		}
-		player_last_direction = DOWN;*/
-	}
-	//UP
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		/*if (position.y > -1864 + SCREEN_HEIGHT) {
-		position.y -= speed;
-		}
-		if (current_animation != &up)
-		{
-		up.Reset();
-		current_animation = &up;
-		}
-		player_last_direction = UP;*/
-	}
-
-	//SHOT 
-
-//	shot();
-//	angle();
-
-	while (SDL_PollEvent(&e))
-	{
-		switch (e.type) {
-		case SDL_MOUSEBUTTONDOWN:
-			if (e.button.button == SDL_BUTTON_LEFT)
-			{
-				shooting = true;
-			}
-			break;
 		}
 	}
 
@@ -270,49 +226,12 @@ bool j1Player::Update(float dt)
 		position.y += 10;
 	}*/
 
-	/*if (anim == true)
-	{
-	current_animation = &die;
-	if (current_animation->Finished() == true)
-	{
-	current_animation->Reset();
-	anim = false;
-	alive = true;
-	only = true;
-	}
-	}
-	else
-	{
-	anim = false;
-	Disable();
-	}
-
-
-	*/
-
-	// Special attack
-
-	/*if (App->input->keyboard[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN ||
-	App->input->controll[5] == KEY_STATE::KEY_DOWN) {   //Mes maco que lo de dalt no? (lo de dalt es pot borrar ja que ja no funciona )
-	if (App->elements1->num_grenades > 0){
-	current_animation = &grenadeThrow;
-	if (grenade == false)
-	App->particles->AddParticle(App->particles->grenade, position.x + 11, position.y + 3, COLLIDER_NONE);
-	}
-	grenade = true;
-	}
-	if (grenade) {
-	if (current_animation->Finished() == true) {
-	current_animation->Reset();
-	grenade = false;
-	}
-	}*/
-
 	//IDLE ANIMATIONS
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_IDLE
 		&& App->input->GetKey(SDL_SCANCODE_UP) == KEY_IDLE
 		&& App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
-		&& App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE)
+		&& App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
+		&& App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
 	{
 		switch (player_last_direction)
 		{
@@ -336,8 +255,6 @@ bool j1Player::Update(float dt)
 	// Player Colliders Position
 	//Player_Coll->SetPos(position.x, position.y);
 
-	//Rotate texture
-	//SDL_RenderCopyEx(App->render->renderer, graphics, &Potato, &Potato_2, angle(), NULL, SDL_FLIP_NONE);
 	// Draw everything --------------------------------------
 	App->render->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),1.0f);
 
