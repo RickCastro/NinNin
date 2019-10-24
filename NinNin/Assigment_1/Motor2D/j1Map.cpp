@@ -59,11 +59,6 @@ void j1Map::Draw()
 			}
 		}
 	}
-
-
-
-	// TODO 9: Complete the draw function
-
 }
 
 

@@ -72,7 +72,6 @@ public:
 	bool fall = false;
 	bool shooting = false;
 	
-	
 
 private:
 	uint win_width;
