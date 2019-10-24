@@ -159,13 +159,17 @@ bool j1Player::Start()
 	win_scale = App->win->GetScale();
 
 	//Init position vars
-	position.x = 30;//win_width/12;
+	position.x =win_width/2;
 	position.y = 215;
 
 	//Init Jump vars
 	jump_height = 300;
 	jump_vel = 10;
 	gravity = 10;
+
+	//acceleraation vars
+	acceleration = 0;
+	accel_counter = 0;
 
 	//Init bools
 	fall = false;
@@ -192,17 +196,19 @@ bool j1Player::CleanUp()
 bool j1Player::Update(float dt)
 {
 	SDL_Event e;
-	speed = 8;
-	SDL_Rect Potato = { 128,717,49,56 };
-	SDL_Rect Potato_2 = { ((win_width*win_scale) / 2) - (23 * win_scale),position.y*win_scale - 35 * win_scale,100,100 };
-
+	speed = 4;
+	
 	//LEFT
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= speed;
+		if (position.x >= speed)
+		{
+			position.x -= (speed + acceleration);
+			Acceleration_Method();
+		}
 
-		//The direccion changes with the position of the mouse
 		
+
 		if (current_animation != &left && !Jump)
 		{
 			left.Reset();
@@ -214,8 +220,12 @@ bool j1Player::Update(float dt)
 	//RIGHT
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
+		/*if (position.x < (int)win_width +400)
+		{*/
+			position.x += speed + acceleration;
+			Acceleration_Method();
+		/*}*/
 
-		position.x += speed;
 
 		if (current_animation != &right && !Jump)
 		{
@@ -224,6 +234,13 @@ bool j1Player::Update(float dt)
 			player_last_direction = RIGHT;
 		}
 
+	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP || App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	{
+		acceleration = 0;
+		accel_counter = 0;
+		speed = 8;
 	}
 
 	//JUMP
@@ -326,6 +343,15 @@ void j1Player::Jump_Method()
 			Jump = false;
 			fall = true;
 		}
+	}
+}
+
+void j1Player::Acceleration_Method()
+{
+	accel_counter += 1;
+	if (accel_counter % 100 == 0)
+	{
+		acceleration += 2;
 	}
 }
 
